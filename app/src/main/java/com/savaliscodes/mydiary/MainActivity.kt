@@ -10,7 +10,7 @@ import androidx.navigation.ui.navigateUp
 import android.view.Menu
 import android.view.MenuItem
 import com.savaliscodes.mydiary.databinding.ActivityMainBinding
-
+//fuuuuck render problems fuck
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
-        }
+        }//ll
     }
 
 }
