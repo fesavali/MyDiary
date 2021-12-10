@@ -1,5 +1,6 @@
 package com.savaliscodes.mydiary
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +10,10 @@ import androidx.navigation.ui.navigateUp
 
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.savaliscodes.mydiary.databinding.ActivityMainBinding
-//fuuuuck render problems fuck
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -18,16 +21,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //connect toolbar to main activity
         setSupportActionBar(binding.toolbar)
 
+        val mAuth = FirebaseAuth.getInstance()
+        val user = mAuth.currentUser
+        if (user != null) {
+            // User is signed in
+            val user: String? = intent.getStringExtra("uReg")
+        } else {
+           val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
+
         //handle fab on click
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+           Toast.makeText(this,"add diary log", Toast.LENGTH_SHORT).show()
         }
     }
     //handle menu inflater
@@ -44,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
-        }//ll
+        }
     }
 
 }
