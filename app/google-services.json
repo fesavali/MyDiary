@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "681700863505",
+    "project_id": "my-diary-8bda0",
+    "storage_bucket": "my-diary-8bda0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681700863505:android:2380c4707efb0d4651cbb0",
+        "android_client_info": {
+          "package_name": "com.savaliscodes.mydiary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681700863505-2dicbhncsdb7tdon5unr0rdclsnv6cur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxKXQE56fjRTrZkNi8aBkIh4kekKwQ_ck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681700863505-2dicbhncsdb7tdon5unr0rdclsnv6cur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
