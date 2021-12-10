@@ -68,6 +68,7 @@
         android:backgroundTint="#514A4A"
         android:text="@string/signup_with_google"
         android:textColor="#FBF9F9"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/btnReg"
         app:layout_constraintStart_toStartOf="@+id/btnReg"
         app:layout_constraintTop_toBottomOf="@+id/btnReg" />
