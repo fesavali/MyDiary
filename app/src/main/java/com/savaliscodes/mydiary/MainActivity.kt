@@ -2,15 +2,15 @@ package com.savaliscodes.mydiary
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
+
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
+
 
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+
 import com.google.firebase.auth.FirebaseAuth
 import com.savaliscodes.mydiary.databinding.ActivityMainBinding
 
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         val user = mAuth.currentUser
         if (user != null) {
             // User is signed in
-            val user: String? = intent.getStringExtra("uReg")
+//            val user: String? = intent.getStringExtra("uReg")
         } else {
             //user is not signed in direct to login
            val intent = Intent(this, Login::class.java)
@@ -39,8 +39,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         //handle fab on click
-        binding.fab.setOnClickListener { view ->
+        binding.fab.setOnClickListener {
            val intent = Intent(this, AddNote::class.java)
+            intent.putExtra("uId", user)
             startActivity(intent)
         }
     }
