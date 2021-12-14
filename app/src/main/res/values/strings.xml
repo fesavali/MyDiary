@@ -17,4 +17,8 @@
     <string name="password">Password</string>
     <string name="continue_with_google">Continue With Google</string>
     <string name="login">Login</string>
+    <string name="diary_log_title">Diary log title</string>
+    <string name="log_contents">log contents</string>
+    <string name="date">date</string>
+    <string name="todo">TODO</string>
 </resources>
