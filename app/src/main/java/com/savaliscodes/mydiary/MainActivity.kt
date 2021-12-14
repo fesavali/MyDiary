@@ -26,19 +26,22 @@ class MainActivity : AppCompatActivity() {
         //connect toolbar to main activity
         setSupportActionBar(binding.toolbar)
 
+       //manage user sessions
         val mAuth = FirebaseAuth.getInstance()
         val user = mAuth.currentUser
         if (user != null) {
             // User is signed in
             val user: String? = intent.getStringExtra("uReg")
         } else {
+            //user is not signed in direct to login
            val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
 
         //handle fab on click
         binding.fab.setOnClickListener { view ->
-           Toast.makeText(this,"add diary log", Toast.LENGTH_SHORT).show()
+           val intent = Intent(this, AddNote::class.java)
+            startActivity(intent)
         }
     }
     //handle menu inflater
@@ -57,5 +60,10 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
+    //sign out user on pressing back button
+    override fun onBackPressed() {
+        FirebaseAuth.getInstance().signOut()
+        val intent = Intent(this, Login::class.java)
+        startActivity(intent)
+    }
 }
