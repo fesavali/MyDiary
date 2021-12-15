@@ -20,7 +20,7 @@ class Login : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         val login = findViewById<Button>(R.id.btnLogin)
-        val googleBtn = findViewById<Button>(R.id.googleLog)
+//        val googleBtn = findViewById<Button>(R.id.googleLog)
         val reg = findViewById<TextView>(R.id.regTxt)
 
         //send user to register page if not registered
