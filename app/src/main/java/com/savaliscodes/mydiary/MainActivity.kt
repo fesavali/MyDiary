@@ -29,13 +29,11 @@ class MainActivity : AppCompatActivity() {
        //manage user sessions
         val mAuth = FirebaseAuth.getInstance()
         val user = mAuth.currentUser
-        if (user != null) {
+        if (!(user != null)) {
             // User is signed in
-//            val user: String? = intent.getStringExtra("uReg")
-        } else {
-            //user is not signed in direct to login
-           val intent = Intent(this, Login::class.java)
-            startActivity(intent)
+    //val user: String? = intent.getStringExtra("uReg")
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
         }
 
         //handle fab on click
