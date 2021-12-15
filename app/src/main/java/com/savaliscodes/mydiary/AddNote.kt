@@ -61,7 +61,7 @@ class AddNote : AppCompatActivity() {
             "Log Time" to currentDateAndTime
         )
 
-        db.collection(userName).document(title)
+        db.collection("/Diary Logs/").document(title)
             .set(diaryLog)
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
