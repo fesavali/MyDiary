@@ -2,23 +2,29 @@ package com.savaliscodes.mydiary
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddNote : AppCompatActivity() {
-//    lateinit var userId: String
+    lateinit var userId: String
+    lateinit var userEmail: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_note)
 //       //get user data from main activity
-//         userId = intent.getStringExtra("uId").toString()
+         userId = intent.getStringExtra("uId").toString()
+        userEmail = intent.getStringExtra("uEmail").toString()
         val btn = findViewById<Button>(R.id.save)
         // handle save button click
         btn.setOnClickListener {
@@ -45,26 +51,35 @@ class AddNote : AppCompatActivity() {
             cont.requestFocus()
             return
         }
-        val db = FirebaseFirestore.getInstance()
+        val db = Firebase.firestore
 
-        val user = FirebaseAuth.getInstance().currentUser
-
-        val userId = user?.uid.toString()
         val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z")
         val currentDateAndTime: String = simpleDateFormat.format(Date())
 
+        val key = db.collection("Diary Logs").document().id;
+
         //put values on hashmap 123
         val diaryLog = hashMapOf(
-            "Log Id" to userId,
+            "Diary Log ID" to key,
+            "User Id" to userId,
             "Log Title" to title,
             "Log Contents" to contents,
-            "Log Time" to currentDateAndTime
+            "Log Time" to currentDateAndTime,
+            "User Email" to userEmail
         )
 
-        db.collection("Diary Logs").document(title)
-            .set(diaryLog)
-            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+        db.collection("Diary Logs").document(key)
+            .set(diaryLog, SetOptions.merge())
+            .addOnSuccessListener {
+                Log.d(TAG, "DocumentSnapshot successfully written!")
+                Toast.makeText(this, "Your Log was Saved Successfully", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error writing document", e)
+                Toast.makeText(this, "Your Log Failed to Save. Try Again. Reason $e", Toast.LENGTH_LONG).show()
+            }
 
     }
 }
