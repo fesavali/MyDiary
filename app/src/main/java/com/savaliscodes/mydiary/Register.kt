@@ -25,7 +25,7 @@ class Register : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
         val regBtn = findViewById<Button>(R.id.btnReg)
-        val googleSign = findViewById<Button>(R.id.googleBtn)
+//        val googleSign = findViewById<Button>(R.id.googleBtn)
         //register User
         regBtn.setOnClickListener {
             registerUser()
@@ -81,12 +81,15 @@ class Register : AppCompatActivity() {
             .addOnCompleteListener(this){ task->
                 if(task.isSuccessful){
                     val user = mAuth.currentUser
+                    val userID = user?.uid.toString()
+                    val uMail = user?.email.toString()
                     val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("UReg", user)
+                    intent.putExtra("uReg", userID)
+                    intent.putExtra("mail", uMail)
                     startActivity(intent)
                 }  else {
                     finish()
-                    Toast.makeText(this,"User Registration Failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,task.exception.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
