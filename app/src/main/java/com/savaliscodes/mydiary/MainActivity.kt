@@ -26,20 +26,15 @@ class MainActivity : AppCompatActivity() {
         //connect toolbar to main activity
         setSupportActionBar(binding.toolbar)
 
-       //manage user sessions
-        val mAuth = FirebaseAuth.getInstance()
-        val user = mAuth.currentUser
-        if (!(user != null)) {
-            // User is signed in
-    //val user: String? = intent.getStringExtra("uReg")
-                val intent = Intent(this, Login::class.java)
-                startActivity(intent)
-        }
+//        get extras from login and register activities
+        val user = intent.getStringExtra("uReg")
+        val uMail = intent.getStringExtra("mail")
 
         //handle fab on click
         binding.fab.setOnClickListener {
            val intent = Intent(this, AddNote::class.java)
             intent.putExtra("uId", user)
+            intent.putExtra("uEmail",uMail)
             startActivity(intent)
         }
     }
@@ -64,5 +59,6 @@ class MainActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
         val intent = Intent(this, Login::class.java)
         startActivity(intent)
+        finish()
     }
 }
