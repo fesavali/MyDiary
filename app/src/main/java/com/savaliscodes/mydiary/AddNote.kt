@@ -50,10 +50,10 @@ class AddNote : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
 
         val userId = user?.uid.toString()
-        val userName = user?.displayName.toString()
         val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z")
         val currentDateAndTime: String = simpleDateFormat.format(Date())
 
+        //put values on hashmap 123
         val diaryLog = hashMapOf(
             "Log Id" to userId,
             "Log Title" to title,
@@ -61,7 +61,7 @@ class AddNote : AppCompatActivity() {
             "Log Time" to currentDateAndTime
         )
 
-        db.collection("/Diary Logs/").document(title)
+        db.collection("Diary Logs").document(title)
             .set(diaryLog)
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
