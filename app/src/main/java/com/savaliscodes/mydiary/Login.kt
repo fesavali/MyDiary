@@ -12,6 +12,7 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
 class Login : AppCompatActivity() {
 
@@ -19,6 +20,16 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        //check if user is signed in
+        var mAuthUser = FirebaseAuth.getInstance().currentUser
+
+        if(mAuthUser != null){
+            val userId = mAuthUser.uid.toString()
+            Toast.makeText(this,"You Are Logged in", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this,MainActivity::class.java)
+            intent.putExtra("uReg", userId)
+            startActivity(intent)
+        }
         val login = findViewById<Button>(R.id.btnLogin)
 //        val googleBtn = findViewById<Button>(R.id.googleLog)
         val reg = findViewById<TextView>(R.id.regTxt)
@@ -63,15 +74,18 @@ class Login : AppCompatActivity() {
             return
         }
         //signIn user
-        mAuth.signInWithEmailLink(uName,uPass)
+        mAuth.signInWithEmailAndPassword(uName,uPass)
             .addOnCompleteListener(this){ task->
                 if(task.isSuccessful){
                     val user = mAuth.currentUser
+                    val userID = user?.uid.toString()
+                    val uMail = user?.email.toString()
                     val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("uReg", user)
+                    intent.putExtra("uReg", userID)
+                    intent.putExtra("mail", uMail)
                     startActivity(intent)
                 }else{
-                    Toast.makeText(this, "Authentication failed. Try Again",
+                    Toast.makeText(this, task.exception.message,
                         Toast.LENGTH_SHORT).show()
                 }
 
