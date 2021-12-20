@@ -8,7 +8,10 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -38,6 +41,8 @@ class Register : AppCompatActivity() {
         val userName = findViewById<EditText>(R.id.Username)
         val password = findViewById<EditText>(R.id.pass)
         val password1 = findViewById<EditText>(R.id.pass1)
+
+        val progress = findViewById<ProgressBar>(R.id.bar1)
 
         //Get Firebase Auth Instance
         val mAuth = FirebaseAuth.getInstance()
@@ -77,9 +82,11 @@ class Register : AppCompatActivity() {
             return
         }
         //register user
+        progress.isVisible = true
         mAuth.createUserWithEmailAndPassword(uEmail, uPass)
             .addOnCompleteListener(this){ task->
                 if(task.isSuccessful){
+                    progress.isInvisible = true
                     val user = mAuth.currentUser
                     val userID = user?.uid.toString()
                     val uMail = user?.email.toString()
@@ -88,6 +95,7 @@ class Register : AppCompatActivity() {
                     intent.putExtra("mail", uMail)
                     startActivity(intent)
                 }  else {
+                    progress.isInvisible = true
                     finish()
                     Toast.makeText(this,task.exception.message, Toast.LENGTH_SHORT).show()
                 }
