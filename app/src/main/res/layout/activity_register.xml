@@ -73,4 +73,17 @@
         app:layout_constraintStart_toStartOf="@+id/btnReg"
         app:layout_constraintTop_toBottomOf="@+id/btnReg" />
 
+    <ProgressBar
+        android:id="@+id/bar1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
