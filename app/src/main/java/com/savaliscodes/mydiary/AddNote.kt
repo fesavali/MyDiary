@@ -72,10 +72,13 @@ class AddNote : AppCompatActivity() {
             "Log Time" to currentDateAndTime,
             "User Email" to userEmail
         )
+        //show progress bar
         progress.isVisible = true
+        //save data to cloud firestore
         db.collection("Diary Logs").document(key)
             .set(diaryLog, SetOptions.merge())
             .addOnSuccessListener {
+                //hide progress bar
                 progress.isInvisible = true
                 Log.d(TAG, "DocumentSnapshot successfully written!")
                 Toast.makeText(this, "Your Log was Saved Successfully", Toast.LENGTH_SHORT).show()

@@ -86,7 +86,9 @@ class Register : AppCompatActivity() {
         mAuth.createUserWithEmailAndPassword(uEmail, uPass)
             .addOnCompleteListener(this){ task->
                 if(task.isSuccessful){
+                    //hide progress bar
                     progress.isInvisible = true
+                    //get current user
                     val user = mAuth.currentUser
                     val userID = user?.uid.toString()
                     val uMail = user?.email.toString()

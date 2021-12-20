@@ -79,7 +79,9 @@ class Login : AppCompatActivity() {
         mAuth.signInWithEmailAndPassword(uName,uPass)
             .addOnCompleteListener(this){ task->
                 if(task.isSuccessful){
+                    //hide progress bar
                     progress.isInvisible = true
+                    //get logged in user
                     val user = mAuth.currentUser
                     val userID = user?.uid.toString()
                     val uMail = user?.email.toString()
