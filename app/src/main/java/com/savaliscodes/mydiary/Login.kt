@@ -4,10 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -52,6 +51,8 @@ class Login : AppCompatActivity() {
         val userName = findViewById<EditText>(R.id.userName)
         val pass = findViewById<EditText>(R.id.password)
 
+        val progress = findViewById<ProgressBar>(R.id.bar)
+
         //Get Firebase Auth Instance
         val mAuth = FirebaseAuth.getInstance()
         //get user inputs
@@ -74,9 +75,11 @@ class Login : AppCompatActivity() {
             return
         }
         //signIn user
+        progress.isVisible = true
         mAuth.signInWithEmailAndPassword(uName,uPass)
             .addOnCompleteListener(this){ task->
                 if(task.isSuccessful){
+                    progress.isInvisible = true
                     val user = mAuth.currentUser
                     val userID = user?.uid.toString()
                     val uMail = user?.email.toString()
@@ -85,6 +88,7 @@ class Login : AppCompatActivity() {
                     intent.putExtra("mail", uMail)
                     startActivity(intent)
                 }else{
+                    progress.isInvisible = true
                     Toast.makeText(this, task.exception.message,
                         Toast.LENGTH_SHORT).show()
                 }
