@@ -8,7 +8,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
@@ -37,6 +40,8 @@ class AddNote : AppCompatActivity() {
         // ref to edit texts
         val tited = findViewById<EditText>(R.id.title_log)
         val cont = findViewById<EditText>(R.id.log_cont)
+
+        val progress = findViewById<ProgressBar>(R.id.bar2)
         //get user input
         val title = tited.text.toString().trim()
         val contents = cont.text.toString().trim()
@@ -67,16 +72,18 @@ class AddNote : AppCompatActivity() {
             "Log Time" to currentDateAndTime,
             "User Email" to userEmail
         )
-
+        progress.isVisible = true
         db.collection("Diary Logs").document(key)
             .set(diaryLog, SetOptions.merge())
             .addOnSuccessListener {
+                progress.isInvisible = true
                 Log.d(TAG, "DocumentSnapshot successfully written!")
                 Toast.makeText(this, "Your Log was Saved Successfully", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
             }
             .addOnFailureListener { e ->
+                progress.isInvisible = true
                 Log.w(TAG, "Error writing document", e)
                 Toast.makeText(this, "Your Log Failed to Save. Try Again. Reason $e", Toast.LENGTH_LONG).show()
             }
