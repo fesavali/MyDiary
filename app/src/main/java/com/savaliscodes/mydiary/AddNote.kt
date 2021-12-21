@@ -65,12 +65,12 @@ class AddNote : AppCompatActivity() {
 
         //put values on hashmap 123
         val diaryLog = hashMapOf(
-            "Diary Log ID" to key,
-            "User Id" to userId,
-            "Log Title" to title,
-            "Log Contents" to contents,
-            "Log Time" to currentDateAndTime,
-            "User Email" to userEmail
+            "DiaryLogID" to key,
+            "UserId" to userId,
+            "LogTitle" to title,
+            "LogContents" to contents,
+            "LogTime" to currentDateAndTime,
+            "UserEmail" to userEmail
         )
         //show progress bar
         progress.isVisible = true
@@ -86,7 +86,9 @@ class AddNote : AppCompatActivity() {
                 startActivity(intent)
             }
             .addOnFailureListener { e ->
+                //on fail hide progress
                 progress.isInvisible = true
+                //log error
                 Log.w(TAG, "Error writing document", e)
                 Toast.makeText(this, "Your Log Failed to Save. Try Again. Reason $e", Toast.LENGTH_LONG).show()
             }
