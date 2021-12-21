@@ -3,53 +3,84 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/img_user"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="@string/todo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher" />
-
-    <TextView
-        android:id="@+id/log_title"
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="@font/abril_fatface"
-        android:text="@string/diary_log_title"
-        android:textColor="#151414"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        app:cardBackgroundColor="#a8e063"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:contentPadding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/img_user"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/log"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/abril_fatface"
-        android:text="@string/log_contents"
-        android:textColor="#1E1C1C"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/log_title"
-        app:layout_constraintStart_toEndOf="@+id/img_user"
-        app:layout_constraintTop_toBottomOf="@+id/log_title" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/date"
-        app:layout_constraintEnd_toEndOf="@+id/log"
-        app:layout_constraintStart_toEndOf="@+id/img_user"
-        app:layout_constraintTop_toBottomOf="@+id/log" />
+            <ImageView
+                android:id="@+id/my_image"
+                android:layout_width="82dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/user_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/ic_launcher"
+                tools:ignore="ImageContrastCheck" />
+
+            <TextView
+                android:id="@+id/log_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/abril_fatface"
+                android:text="@string/diary_log_title"
+                android:textColor="#0E0B0B"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toEndOf="@+id/my_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/log_contents"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/abril_fatface"
+                android:text="@string/log_contents"
+                android:textColor="#474141"
+                android:textStyle="normal|italic"
+                app:layout_constraintEnd_toEndOf="@+id/log_title"
+                app:layout_constraintHorizontal_bias="0.483"
+                app:layout_constraintStart_toEndOf="@+id/my_image"
+                app:layout_constraintTop_toBottomOf="@+id/log_title" />
+
+            <TextView
+                android:id="@+id/log_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/abril_fatface"
+                android:text="@string/log_time"
+                android:textAlignment="viewEnd"
+                android:textAllCaps="false"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="@+id/log_contents"
+                app:layout_constraintStart_toStartOf="@+id/log_contents"
+                app:layout_constraintTop_toBottomOf="@+id/log_contents"
+                tools:ignore="TextContrastCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
