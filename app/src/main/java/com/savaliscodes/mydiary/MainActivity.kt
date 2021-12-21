@@ -10,6 +10,8 @@ import androidx.navigation.ui.AppBarConfiguration
 
 import android.view.Menu
 import android.view.MenuItem
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.google.firebase.auth.FirebaseAuth
 import com.savaliscodes.mydiary.databinding.ActivityMainBinding
@@ -18,6 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var linearLayoutManager: LinearLayoutManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         //connect toolbar to main activity
         setSupportActionBar(binding.toolbar)
+        val recyclerView = findViewById<RecyclerView>(R.id.rc_logs)
+
+        linearLayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = linearLayoutManager
+
 
 //        get extras from login and register activities
         val user = intent.getStringExtra("uReg")
