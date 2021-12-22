@@ -91,7 +91,7 @@ class Login : AppCompatActivity() {
                     startActivity(intent)
                 }else{
                     progress.isInvisible = true
-                    Toast.makeText(this, task.exception.message,
+                    Toast.makeText(this, task.exception?.message,
                         Toast.LENGTH_SHORT).show()
                 }
 
