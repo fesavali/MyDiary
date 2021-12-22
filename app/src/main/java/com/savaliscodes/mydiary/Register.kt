@@ -21,7 +21,6 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class Register : AppCompatActivity() {
 
-    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,7 +98,7 @@ class Register : AppCompatActivity() {
                 }  else {
                     progress.isInvisible = true
                     finish()
-                    Toast.makeText(this,task.exception.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,task.exception?.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
