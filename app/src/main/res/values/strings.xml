@@ -23,7 +23,6 @@
     <string name="todo">TODO</string>
     <string name="save_to_diary">Save to Diary</string>
     <string name="add_new_note">Add New Note</string>
-    <string name="todo">TODO</string>
     <string name="user_image">user image</string>
     <string name="log_time">Log time</string>
 </resources>
