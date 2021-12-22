@@ -2,6 +2,7 @@ package com.savaliscodes.mydiary
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 
 import androidx.appcompat.app.AppCompatActivity
 
@@ -14,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.savaliscodes.mydiary.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +25,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var logsList : ArrayList<DiaryData>
+    private lateinit var logsAdapter : LogsAdapter
+    private lateinit var db : FirebaseFirestore
+//    private lateinit var userId : String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,11 +38,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         //connect toolbar to main activity
         setSupportActionBar(binding.toolbar)
-        val recyclerView = findViewById<RecyclerView>(R.id.rc_logs)
 
-        linearLayoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = linearLayoutManager
+        recyclerView = findViewById(R.id.rc_logs)
 
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
+
+        logsList = arrayListOf()
+
+        logsAdapter = LogsAdapter(logsList)
+
+        recyclerView.adapter = logsAdapter
+
+        eventChangeListener()
 
 //        get extras from login and register activities
         val user = intent.getStringExtra("uReg")
@@ -47,6 +64,33 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    private fun eventChangeListener() {
+        db = Firebase.firestore
+        val userId = intent.getStringExtra("uReg")
+        // Create a reference to the cities collection
+        val logsRef = db.collection("Diary Logs")
+        // Create a query against the collection.
+        val query = logsRef.whereEqualTo("UserId", userId)
+
+            query.orderBy("LogTime", Query.Direction.ASCENDING)
+                .addSnapshotListener { value, error ->
+                if(error != null){
+                    Log.e("Firestore Read Error", error.message.toString())
+
+                    return@addSnapshotListener
+                }
+                for(dc : DocumentChange in value?.documentChanges!!){
+                    if(dc.type == DocumentChange.Type.ADDED){
+                        logsList.add(dc.document.toObject(DiaryData::class.java))
+                    }
+                }
+                logsAdapter.notifyDataSetChanged()
+            }
+
+
+    }
+
     //handle menu inflater
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
