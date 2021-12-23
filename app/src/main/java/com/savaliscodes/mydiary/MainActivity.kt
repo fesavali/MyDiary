@@ -6,7 +6,6 @@ import android.util.Log
 
 import androidx.appcompat.app.AppCompatActivity
 
-import androidx.navigation.ui.AppBarConfiguration
 
 
 import android.view.Menu
@@ -16,15 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+
 import com.savaliscodes.mydiary.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var recyclerView: RecyclerView
     private lateinit var logsList : ArrayList<DiaryData>
     private lateinit var logsAdapter : LogsAdapter
@@ -40,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         recyclerView = findViewById(R.id.rc_logs)
-
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
 
@@ -59,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         //update recyclerview on adding a new note
         val newDoc = intent.getStringExtra("docUID")
         if(newDoc != null){
-            eventChangeListener()
+            logsAdapter.notifyDataSetChanged()
         }
 
         //handle fab on click
@@ -72,28 +67,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun eventChangeListener() {
-        db = Firebase.firestore
+        db = FirebaseFirestore.getInstance()
+
         val userId = intent.getStringExtra("uReg")
+
         // Create a reference to the cities collection
         val logsRef = db.collection("Diary Logs")
+
         // Create a query against the collection.
         val query = logsRef.whereEqualTo("UserId", userId)
 
-            query.orderBy("LogTime", Query.Direction.DESCENDING)
-                .addSnapshotListener { value, error ->
+        query.orderBy("LogTime", Query.Direction.DESCENDING)
+            .addSnapshotListener(object : EventListener<QuerySnapshot>{
+            override fun onEvent(
+                value: QuerySnapshot?,
+                error: FirebaseFirestoreException?
+            ) {
                 if(error != null){
                     Log.e("Firestore Read Error", error.message.toString())
 
-                    return@addSnapshotListener
+                    return
                 }
                 for(dc : DocumentChange in value?.documentChanges!!){
                     if(dc.type == DocumentChange.Type.ADDED){
                         logsList.add(dc.document.toObject(DiaryData::class.java))
                     }
+                    if(dc.type == DocumentChange.Type.REMOVED){
+                        logsList.remove(dc.document.toObject(DiaryData::class.java))
+                    }
                 }
                 logsAdapter.notifyDataSetChanged()
             }
 
+        })
 
     }
 
@@ -121,13 +127,4 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    override fun onResume() {
-        super.onResume()
-        logsAdapter.notifyDataSetChanged()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        logsAdapter.notifyDataSetChanged()
-    }
 }
