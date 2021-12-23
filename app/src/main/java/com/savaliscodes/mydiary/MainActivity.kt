@@ -52,15 +52,21 @@ class MainActivity : AppCompatActivity() {
 
         eventChangeListener()
 
-//        get extras from login and register activities
+        //get extras from login and register activities
         val user = intent.getStringExtra("uReg")
         val uMail = intent.getStringExtra("mail")
+
+        //update recyclerview on adding a new note
+        val newDoc = intent.getStringExtra("docUID")
+        if(newDoc != null){
+            eventChangeListener()
+        }
 
         //handle fab on click
         binding.fab.setOnClickListener {
            val intent = Intent(this, AddNote::class.java)
             intent.putExtra("uId", user)
-            intent.putExtra("uEmail",uMail)
+            intent.putExtra("uEmail", uMail)
             startActivity(intent)
         }
     }
@@ -73,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         // Create a query against the collection.
         val query = logsRef.whereEqualTo("UserId", userId)
 
-            query.orderBy("LogTime", Query.Direction.ASCENDING)
+            query.orderBy("LogTime", Query.Direction.DESCENDING)
                 .addSnapshotListener { value, error ->
                 if(error != null){
                     Log.e("Firestore Read Error", error.message.toString())
@@ -113,5 +119,15 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, Login::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logsAdapter.notifyDataSetChanged()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        logsAdapter.notifyDataSetChanged()
     }
 }
