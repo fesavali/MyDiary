@@ -1,6 +1,7 @@
 package com.savaliscodes.mydiary
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -82,7 +83,23 @@ class AddNote : AppCompatActivity() {
                 progress.isInvisible = true
                 Log.d(TAG, "DocumentSnapshot successfully written!")
                 Toast.makeText(this, "Your Log was Saved Successfully", Toast.LENGTH_SHORT).show()
+
+//                fun finish() {
+//                    val returnIntent = Intent()
+//                    returnIntent.putExtra("passed_item", userId)
+//                    // setResult(RESULT_OK);
+//                    // setResult(RESULT_OK);
+//                    setResult(
+//                        RESULT_OK,
+//                        returnIntent
+//                    ) //By not passing the intent in the result, the calling activity will get null data.
+//
+//                    super.finish()
+//
+//                }
+
                 val intent = Intent(this,MainActivity::class.java)
+                intent.putExtra("docUID", userId)
                 startActivity(intent)
             }
             .addOnFailureListener { e ->
@@ -94,4 +111,6 @@ class AddNote : AppCompatActivity() {
             }
 
     }
+
+
 }
