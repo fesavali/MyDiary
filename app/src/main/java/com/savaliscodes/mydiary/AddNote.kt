@@ -19,6 +19,10 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
+import com.google.firebase.firestore.FirebaseFirestore
+
+
+
 
 class AddNote : AppCompatActivity() {
     lateinit var userId: String
@@ -57,7 +61,7 @@ class AddNote : AppCompatActivity() {
             cont.requestFocus()
             return
         }
-        val db = Firebase.firestore
+        val db = FirebaseFirestore.getInstance()
 
         val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z")
         val currentDateAndTime: String = simpleDateFormat.format(Date())
@@ -83,24 +87,10 @@ class AddNote : AppCompatActivity() {
                 progress.isInvisible = true
                 Log.d(TAG, "DocumentSnapshot successfully written!")
                 Toast.makeText(this, "Your Log was Saved Successfully", Toast.LENGTH_SHORT).show()
-
-//                fun finish() {
-//                    val returnIntent = Intent()
-//                    returnIntent.putExtra("passed_item", userId)
-//                    // setResult(RESULT_OK);
-//                    // setResult(RESULT_OK);
-//                    setResult(
-//                        RESULT_OK,
-//                        returnIntent
-//                    ) //By not passing the intent in the result, the calling activity will get null data.
-//
-//                    super.finish()
-//
-//                }
-
-                val intent = Intent(this,MainActivity::class.java)
-                intent.putExtra("docUID", userId)
-                startActivity(intent)
+                finish()
+//                val intent = Intent(this,MainActivity::class.java)
+//                intent.putExtra("docUID", userId)
+//                startActivity(intent)
             }
             .addOnFailureListener { e ->
                 //on fail hide progress
