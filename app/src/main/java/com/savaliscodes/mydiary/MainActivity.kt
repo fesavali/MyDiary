@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var logsList : ArrayList<DiaryData>
     private lateinit var logsAdapter : LogsAdapter
     private lateinit var db : FirebaseFirestore
-//    private lateinit var userId : String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
