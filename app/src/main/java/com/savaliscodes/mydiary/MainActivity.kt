@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             ) {
                 if(error != null){
                     Log.e("Firestore Read Error", error.message.toString())
-//                    Toast.makeText(this, "No Diary Logs Yet", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "No Diary Logs Yet", Toast.LENGTH_SHORT).show()
                     return
                 }
                 for(dc : DocumentChange in value?.documentChanges!!){
