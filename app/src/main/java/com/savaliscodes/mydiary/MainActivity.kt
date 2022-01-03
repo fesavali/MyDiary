@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -85,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             ) {
                 if(error != null){
                     Log.e("Firestore Read Error", error.message.toString())
-
+//                    Toast.makeText(this, "No Diary Logs Yet", Toast.LENGTH_SHORT).show()
                     return
                 }
                 for(dc : DocumentChange in value?.documentChanges!!){
@@ -94,6 +95,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     if(dc.type == DocumentChange.Type.REMOVED){
                         logsList.remove(dc.document.toObject(DiaryData::class.java))
+                    }
+                    if(dc.type == DocumentChange.Type.MODIFIED){
+                        logsList.add(dc.document.toObject(DiaryData::class.java))
                     }
                 }
                 logsAdapter.notifyDataSetChanged()
