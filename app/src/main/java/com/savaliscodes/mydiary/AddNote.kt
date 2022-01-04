@@ -77,7 +77,7 @@ class AddNote : AppCompatActivity() {
             "LogTime" to currentDateAndTime,
             "UserEmail" to userEmail
         )
-        //show progress bar
+        //show progressBar
         progress.isVisible = true
         //save data to cloud firestore
         db.collection("Diary Logs").document(key)
