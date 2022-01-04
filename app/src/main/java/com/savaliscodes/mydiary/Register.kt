@@ -94,6 +94,7 @@ class Register : AppCompatActivity() {
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("uReg", userID)
                     intent.putExtra("mail", uMail)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                 }  else {
                     progress.isInvisible = true
