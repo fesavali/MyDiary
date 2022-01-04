@@ -3,4 +3,4 @@ package com.savaliscodes.mydiary
 //NB must be nullable
 data class DiaryData(var DiaryLogID: String ?= null, var UserId: String ?= null,
                      var LogTitle:String ?= null, var LogContents: String ?= null,
-                     var LogTime: String ?= null)
+                     var LogTime: String ?= null, var UserEmail: String ?= null)
