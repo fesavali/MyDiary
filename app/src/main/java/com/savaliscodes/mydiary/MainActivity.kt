@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var logsList : ArrayList<DiaryData>
     private lateinit var logsAdapter : LogsAdapter
     private lateinit var db : FirebaseFirestore
+    private lateinit var work : ListenerRegistration
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,12 +52,6 @@ class MainActivity : AppCompatActivity() {
         val user = intent.getStringExtra("uReg")
         val uMail = intent.getStringExtra("mail")
 
-        //update recyclerview on adding a new note
-        val newDoc = intent.getStringExtra("docUID")
-        if(newDoc != null){
-            logsAdapter.notifyDataSetChanged()
-        }
-
         //handle fab on click
         binding.fab.setOnClickListener {
            val intent = Intent(this, AddNote::class.java)
@@ -65,6 +60,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+//this causes triple entry reading
+//    override fun onResume() {
+//        super.onResume()
+//        eventChangeListener()
+//
+//    }
+//    override fun onStart() {
+//        super.onStart()
+//        eventChangeListener()
+//    }
 
     private fun eventChangeListener() {
         db = FirebaseFirestore.getInstance()
@@ -77,8 +82,10 @@ class MainActivity : AppCompatActivity() {
         // Create a query against the collection.
         val query = logsRef.whereEqualTo("UserId", userId)
 
-        query.orderBy("LogTime", Query.Direction.DESCENDING)
-            .addSnapshotListener(object : EventListener<QuerySnapshot>{
+        work = query.orderBy("LogTime", Query.Direction.DESCENDING)
+                //read both realtime and local data
+            .addSnapshotListener(MetadataChanges.INCLUDE,
+                    object : EventListener<QuerySnapshot>{
             override fun onEvent(
                 value: QuerySnapshot?,
                 error: FirebaseFirestoreException?
@@ -124,8 +131,13 @@ class MainActivity : AppCompatActivity() {
     }
     //sign out user on pressing back button
     override fun onBackPressed() {
+        //signOut user
         FirebaseAuth.getInstance().signOut()
+        //stop listening for db changes
+        work.remove()
+        //start Login activity
         val intent = Intent(this, Login::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()
     }
