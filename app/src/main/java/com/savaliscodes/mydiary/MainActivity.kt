@@ -1,5 +1,6 @@
 package com.savaliscodes.mydiary
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -128,10 +130,61 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings ->{
+                deleteAccountDialog()
+                true
+            }
+            R.id.log_out ->{
+
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun deleteAccountDialog() {
+        val delDialog = AlertDialog.Builder(this)
+        //set title for alert dialog
+        delDialog.setTitle("Delete Account")
+        //set message for alert dialog
+        delDialog.setMessage("Are You Sure you want to delete your account? This will delete all your saved Data.")
+        delDialog.setIcon(android.R.drawable.ic_dialog_alert)
+        //performing positive action
+        delDialog.setPositiveButton("Yes"){dialogInterface, which ->
+            val user = FirebaseAuth.getInstance().currentUser
+            user?.delete()
+                ?.addOnCompleteListener { task->
+                    if(task.isSuccessful){
+                        Log.d(TAG, "User account deleted.")
+                        Toast.makeText(applicationContext,
+                            "You have successfully deleted your account.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, Register::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        intent.putExtra("del", 112)
+                        startActivity(intent)
+                    }else{
+                        Toast.makeText(applicationContext,
+                            "Account Deletion Failed. Try Again.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+        }
+        //performing cancel action
+        delDialog.setNeutralButton("Cancel"){dialogInterface , which ->
+            Toast.makeText(applicationContext,"clicked cancel\n operation cancel",Toast.LENGTH_SHORT).show()
+        }
+        //performing negative action
+        delDialog.setNegativeButton("No"){dialogInterface, which ->
+            Toast.makeText(applicationContext,"clicked No",Toast.LENGTH_LONG).show()
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = delDialog.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+
+    }
+
     //sign out user on pressing back button
     override fun onBackPressed() {
         //signOut user
