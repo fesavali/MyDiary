@@ -1,9 +1,11 @@
 package com.savaliscodes.mydiary
 
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +24,7 @@ import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 import com.google.firebase.firestore.FirebaseFirestore
+import android.graphics.drawable.ColorDrawable
 
 class AddNote : AppCompatActivity() {
     lateinit var userId: String
@@ -29,6 +32,8 @@ class AddNote : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_note)
+
+
      //get user data from main activity
         userId = intent.getStringExtra("uId").toString()
         userEmail = intent.getStringExtra("uEmail").toString()
