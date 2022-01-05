@@ -1,8 +1,10 @@
 package com.savaliscodes.mydiary
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.*
 import androidx.core.view.isInvisible
@@ -14,6 +16,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 
 class Login : AppCompatActivity() {
+    lateinit var userName : EditText
+    lateinit var pass : EditText
+    lateinit var progress : ProgressBar
+    lateinit var login : Button
+    lateinit var reg : TextView
+    lateinit var forgot : TextView
+    lateinit var mail : EditText
+    lateinit var rest : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +39,14 @@ class Login : AppCompatActivity() {
             intent.putExtra("uReg", userId)
             startActivity(intent)
         }
-        val login = findViewById<Button>(R.id.btnLogin)
+        //Initialise views
+        userName = findViewById(R.id.userName)
+        pass = findViewById(R.id.password)
+        progress = findViewById(R.id.bar)
+        login = findViewById(R.id.btnLogin)
 //        val googleBtn = findViewById<Button>(R.id.googleLog)
-        val reg = findViewById<TextView>(R.id.regTxt)
+        reg = findViewById(R.id.regTxt)
+        forgot = findViewById(R.id.fogt)
 
         //send user to register page if not registered
         reg.setOnClickListener {
@@ -44,20 +59,19 @@ class Login : AppCompatActivity() {
             logInUser()
         }
 
+        //process user password reset
+        forgot.setOnClickListener{
+            sendEmailPassReset()
+        }
+
     }
 
     private fun logInUser() {
-
-        val userName = findViewById<EditText>(R.id.userName)
-        val pass = findViewById<EditText>(R.id.password)
-
-        val progress = findViewById<ProgressBar>(R.id.bar)
-
         //Get Firebase Auth Instance
         val mAuth = FirebaseAuth.getInstance()
         //get user inputs
-      val uName:String = userName.text.toString().trim()
-      val uPass:String = pass.text.toString().trim()
+        val uName:String = userName.text.toString().trim()
+        val uPass:String = pass.text.toString().trim()
         //validate user inputs
         if(uName.isEmpty()){
             userName.error = "User Email is required"
@@ -99,6 +113,67 @@ class Login : AppCompatActivity() {
             }
 
     }
+
+    private fun sendEmailPassReset() {
+        //set all other views as invisible
+        viewsInvisible()
+        //get views
+        mail = findViewById<EditText>(R.id.resetEmail)
+        rest = findViewById<Button>(R.id.reset)
+        mail.isVisible = true
+        rest.isVisible = true
+
+        rest.setOnClickListener {
+            val email = mail.text.toString().trim()
+            //validate input
+            if(email.isEmpty()){
+                mail.error = "Email is Required."
+                mail.requestFocus()
+                return@setOnClickListener
+            }
+            if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                mail.error = "Enter a valid Email"
+                mail.requestFocus()
+                return@setOnClickListener
+            }
+            progress.isVisible = true
+            FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task->
+                        if(task.isSuccessful){
+                            progress.isInvisible = true
+                            Log.d(TAG, "Email sent.")
+                            Toast.makeText(applicationContext,
+                                    "Password Reset Successful. Check Your email.", Toast.LENGTH_LONG).show()
+                            //set other views visible for login
+                            viewsVisible()
+                        }else{
+                            Log.d(TAG, "Email sent Failed.")
+                            Toast.makeText(applicationContext,
+                                    task.exception?.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+        }
+
+    }
+
+    private fun viewsVisible() {
+        userName.isVisible = true
+        pass.isVisible = true
+        login.isVisible = true
+        reg.isVisible = true
+        forgot.isVisible = true
+        mail.isInvisible = true
+        rest.isInvisible = true
+    }
+
+    private fun viewsInvisible() {
+        userName.isInvisible = true
+        pass.isInvisible = true
+        login.isInvisible = true
+        reg.isInvisible = true
+        forgot.isInvisible = true
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
