@@ -95,6 +95,9 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "No Diary Logs Yet", Toast.LENGTH_SHORT).show()
                     return
                 }
+                if(value?.isEmpty == true){
+                    Toast.makeText(applicationContext, "Welcome. Add Your First Log.\n Press the + button", Toast.LENGTH_LONG).show()
+                }
                 for(dc : DocumentChange in value?.documentChanges!!){
                     if(dc.type == DocumentChange.Type.ADDED){
                         logsList.add(dc.document.toObject(DiaryData::class.java))
@@ -133,8 +136,10 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         //signOut user
         FirebaseAuth.getInstance().signOut()
+
         //stop listening for db changes
         work.remove()
+
         //start Login activity
         val intent = Intent(this, Login::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
