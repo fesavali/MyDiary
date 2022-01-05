@@ -21,17 +21,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.google.firebase.firestore.FirebaseFirestore
 
-
-
-
 class AddNote : AppCompatActivity() {
     lateinit var userId: String
     lateinit var userEmail: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_note)
-//       //get user data from main activity
-         userId = intent.getStringExtra("uId").toString()
+     //get user data from main activity
+        userId = intent.getStringExtra("uId").toString()
         userEmail = intent.getStringExtra("uEmail").toString()
         val btn = findViewById<Button>(R.id.save)
         // handle save button click
@@ -86,11 +83,9 @@ class AddNote : AppCompatActivity() {
                 //hide progress bar
                 progress.isInvisible = true
                 Log.d(TAG, "DocumentSnapshot successfully written!")
+                //redirect home
                 Toast.makeText(this, "Your Log was Saved Successfully", Toast.LENGTH_SHORT).show()
                 finish()
-//                val intent = Intent(this,MainActivity::class.java)
-//                intent.putExtra("docUID", userId)
-//                startActivity(intent)
             }
             .addOnFailureListener { e ->
                 //on fail hide progress
