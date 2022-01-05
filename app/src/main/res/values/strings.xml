@@ -25,4 +25,8 @@
     <string name="add_new_note">Add New Note</string>
     <string name="user_image">user image</string>
     <string name="log_time">Log time</string>
+    <string name="i_dont_have_an_account">I Dont Have An Account</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="enter_your_account_email_to_reset_password">Enter Your Account Email to Reset Password</string>
+    <string name="reset_password">Reset Password</string>
 </resources>
