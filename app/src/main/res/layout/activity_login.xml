@@ -62,11 +62,23 @@
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <TextView
+        android:id="@+id/fogt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/forgot_password"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+    <TextView
         android:id="@+id/regTxt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="I Dont Have An Accoubt"
+        android:text="@string/i_dont_have_an_account"
         android:textAlignment="center"
         android:textColor="#121111"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,5 +97,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.331" />
+
+    <EditText
+        android:id="@+id/resetEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="@string/enter_your_account_email_to_reset_password"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#534949"
+        android:text="@string/reset_password"
+        android:textColor="#FBF8F8"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/resetEmail"
+        app:layout_constraintStart_toStartOf="@+id/resetEmail"
+        app:layout_constraintTop_toBottomOf="@+id/resetEmail"
+        tools:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
