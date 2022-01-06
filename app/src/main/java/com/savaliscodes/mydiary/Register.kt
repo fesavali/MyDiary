@@ -26,15 +26,14 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        //handle account delete with appropriate toast
         val toast = intent.getStringExtra("del")
         val name = intent.getStringExtra("name")
         if(112.equals(toast)){
             Toast.makeText(this, "Its sad to see you leave.$name" +
                     "Would you like to create another Account?", Toast.LENGTH_LONG).show()
         }
-
         val regBtn = findViewById<Button>(R.id.btnReg)
-//        val googleSign = findViewById<Button>(R.id.googleBtn)
         //register User
         regBtn.setOnClickListener {
             registerUser()
