@@ -135,11 +135,43 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.log_out ->{
-
+                logoutDialog()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun logoutDialog() {
+        val outDialog = AlertDialog.Builder(this)
+        //set title for alert dialog
+        outDialog.setTitle("Logout")
+        //set message for alert dialog
+        outDialog.setMessage("Are you sure you want to log out?")
+        outDialog.setIcon(android.R.drawable.ic_lock_power_off)
+        //perform positive action
+        outDialog.setPositiveButton("Yes"){dialogInterface, which ->
+            //signOut user
+            FirebaseAuth.getInstance().signOut()
+            //redirect to login
+            val intent = Intent(this, Login::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+        }
+        //cancel option
+        outDialog.setNeutralButton("Cancel"){dialogInterface, which ->
+            Toast.makeText(applicationContext,"clicked cancel\n operation canceled",Toast.LENGTH_SHORT).show()
+        }
+        //perform negative action
+        outDialog.setNegativeButton("No"){dialogInterface, which ->
+            Toast.makeText(applicationContext,"clicked No",Toast.LENGTH_LONG).show()
+        }
+        //create the alert dialog
+        val alertDialog : AlertDialog = outDialog.create()
+        //other dialog policies
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+
     }
 
     private fun deleteAccountDialog() {
@@ -148,7 +180,7 @@ class MainActivity : AppCompatActivity() {
         delDialog.setTitle("Delete Account")
         //set message for alert dialog
         delDialog.setMessage("Are You Sure you want to delete your account? This will delete all your saved Data.")
-        delDialog.setIcon(android.R.drawable.ic_dialog_alert)
+        delDialog.setIcon(android.R.drawable.ic_menu_delete)
         //performing positive action
         delDialog.setPositiveButton("Yes"){dialogInterface, which ->
             val user = FirebaseAuth.getInstance().currentUser
@@ -158,9 +190,12 @@ class MainActivity : AppCompatActivity() {
                         Log.d(TAG, "User account deleted.")
                         Toast.makeText(applicationContext,
                             "You have successfully deleted your account.", Toast.LENGTH_SHORT).show()
+                        val name = FirebaseAuth.getInstance().currentUser
+                        val name1 = name.displayName.toString()
                         val intent = Intent(this, Register::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         intent.putExtra("del", 112)
+                        intent.putExtra("name", name1)
                         startActivity(intent)
                     }else{
                         Toast.makeText(applicationContext,
@@ -171,7 +206,7 @@ class MainActivity : AppCompatActivity() {
         }
         //performing cancel action
         delDialog.setNeutralButton("Cancel"){dialogInterface , which ->
-            Toast.makeText(applicationContext,"clicked cancel\n operation cancel",Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext,"clicked cancel\n operation canceled",Toast.LENGTH_SHORT).show()
         }
         //performing negative action
         delDialog.setNegativeButton("No"){dialogInterface, which ->
