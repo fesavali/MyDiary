@@ -22,4 +22,7 @@
     <style name="Theme.MyDiary.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.MyDiary.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="BackgroundImageStyle">
+        <item name="android:windowBackground">@drawable/bg</item>
+    </style>
 </resources>
