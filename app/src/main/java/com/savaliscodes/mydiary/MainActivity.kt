@@ -192,11 +192,13 @@ class MainActivity : AppCompatActivity() {
                             "You have successfully deleted your account.", Toast.LENGTH_SHORT).show()
                         val name = FirebaseAuth.getInstance().currentUser
                         val name1 = name?.displayName.toString()
+                        //send user to reg activity
                         val intent = Intent(this, Register::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         intent.putExtra("del", 112)
                         intent.putExtra("name", name1)
                         startActivity(intent)
+
                     }else{
                         Toast.makeText(applicationContext,
                             "Account Deletion Failed. Try Again.", Toast.LENGTH_SHORT).show()
