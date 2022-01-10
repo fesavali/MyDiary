@@ -36,7 +36,7 @@
     <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
+    <string name="signature_title">u_sign</string>
     <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
@@ -45,4 +45,15 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="login_method">Security Preferences</string>
+    <string name="rew"><![CDATA[Always Require Email & Password]]></string>
+    <string name="display">Sets Your App display Name</string>
+    <string name="no_auth">No Auth is Required Fro This App</string>
+    <string name="auth"><![CDATA[Always use Email & Password To Login]]></string>
+    <string name="no_print">You Can\'t use Fingerprint to Sign In</string>
+    <string name="print">You can Use Fingerprint To Sign In</string>
+    <string name="user">Set User Name</string>
+    <string name="auth_al">Keep me Signed In</string>
+    <string name="no_auth1">This will keep your Account unsecured always</string>
+    <string name="auth1">Require an Authentication When You Open the app</string>
 </resources>
