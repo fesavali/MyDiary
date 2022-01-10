@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings ->{
+            R.id.delete_account ->{
                 deleteAccountDialog()
                 true
             }
@@ -138,8 +138,24 @@ class MainActivity : AppCompatActivity() {
                 logoutDialog()
                 true
             }
+            R.id.settings ->{
+                launchPreferences()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun launchPreferences() {
+        // Declaring fragment manager from making data
+        // transactions using the custom fragment
+        val mFragmentManager = supportFragmentManager
+        val mFragmentTransaction = mFragmentManager.beginTransaction()
+        val mFragment = SettingsFragment()
+        val mBundle = Bundle()
+//        mBundle.putString("mText",mEditText.text.toString())
+        mFragment.arguments = mBundle
+        mFragmentTransaction.add(R.id.frameLayout, mFragment).commit()
     }
 
     private fun logoutDialog() {
