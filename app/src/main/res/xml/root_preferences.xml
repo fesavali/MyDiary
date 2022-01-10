@@ -10,22 +10,27 @@
             app:key="@string/signature_title"
             app:title="@string/user"
             app:useSimpleSummaryProvider="true"
-            android:summary="@string/display"/>
+            android:summary="@string/display"
+            android:iconSpaceReserved="false"/>
         <SwitchPreference
             android:defaultValue="true"
             android:key="password_s"
             android:title="@string/rew"
+            android:iconSpaceReserved="false"
             android:summaryOff="@string/no_auth"
             android:summaryOn="@string/auth"/>
         <CheckBoxPreference
+            android:dependency="password_s"
             android:defaultValue="false"
             android:key="finger_print"
             android:title="Use Fingerprint To Sign in"
+            android:iconSpaceReserved="false"
             android:summaryOff="@string/no_print"
             android:summaryOn="@string/print"/>
         <SwitchPreference
             android:defaultValue="false"
             android:key="always"
+            android:iconSpaceReserved="false"
             android:title="@string/auth_al"
             android:summaryOn="@string/no_auth1"
             android:summaryOff="@string/auth1"
@@ -39,11 +44,13 @@
 
         <SwitchPreferenceCompat
             app:key="sync"
-            app:title="@string/sync_title" />
+            app:title="@string/sync_title"
+            android:iconSpaceReserved="false"/>
 
         <SwitchPreferenceCompat
             app:dependency="sync"
             app:key="attachment"
+            android:iconSpaceReserved="false"
             app:summaryOff="@string/attachment_summary_off"
             app:summaryOn="@string/attachment_summary_on"
             app:title="@string/attachment_title" />
