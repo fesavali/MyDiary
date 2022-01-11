@@ -147,15 +147,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun launchPreferences() {
-        // Declaring fragment manager from making data
-        // transactions using the custom fragment
-        val mFragmentManager = supportFragmentManager
-        val mFragmentTransaction = mFragmentManager.beginTransaction()
-        val mFragment = SettingsFragment()
-        val mBundle = Bundle()
-//        mBundle.putString("mText",mEditText.text.toString())
-        mFragment.arguments = mBundle
-        mFragmentTransaction.add(R.id.frameLayout, mFragment).commit()
+        val intent = Intent(this, Settings::class.java)
+        startActivity(intent)
     }
 
     private fun logoutDialog() {
