@@ -9,17 +9,24 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppBarOverlay">
+        android:theme="@style/Theme.MyDiary.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/PopupOverlay" />
+            app:navigationIcon="?attr/actionModeCloseDrawable"
+            app:popupTheme="@style/Theme.MyDiary.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_settings" />
 
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:paddingTop="40dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/button" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
