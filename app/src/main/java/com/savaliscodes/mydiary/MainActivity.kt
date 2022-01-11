@@ -6,19 +6,14 @@ import android.os.Bundle
 import android.util.Log
 
 import androidx.appcompat.app.AppCompatActivity
-
-
-
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
-
 import com.savaliscodes.mydiary.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

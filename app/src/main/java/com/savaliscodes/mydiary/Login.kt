@@ -9,11 +9,7 @@ import android.util.Patterns
 import android.widget.*
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 
 class Login : AppCompatActivity() {
     lateinit var userName : EditText
@@ -44,7 +40,7 @@ class Login : AppCompatActivity() {
         pass = findViewById(R.id.password)
         progress = findViewById(R.id.bar)
         login = findViewById(R.id.btnLogin)
-//        val googleBtn = findViewById<Button>(R.id.googleLog)
+        //val googleBtn = findViewById<Button>(R.id.googleLog)
         reg = findViewById(R.id.regTxt)
         forgot = findViewById(R.id.fogt)
 

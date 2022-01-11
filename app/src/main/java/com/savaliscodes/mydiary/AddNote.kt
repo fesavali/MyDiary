@@ -1,11 +1,7 @@
 package com.savaliscodes.mydiary
 
 import android.annotation.SuppressLint
-import android.app.ActionBar
-import android.app.Activity
 import android.content.ContentValues.TAG
-import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,14 +13,10 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 import com.google.firebase.firestore.FirebaseFirestore
-import android.graphics.drawable.ColorDrawable
 
 class AddNote : AppCompatActivity() {
     lateinit var userId: String
