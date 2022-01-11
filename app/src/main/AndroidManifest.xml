@@ -15,7 +15,7 @@
             android:name=".Settings"
             android:exported="false"
             android:label="@string/title_activity_settings"
-            android:theme="@style/NoActionBar" />
+            android:theme="@style/Theme.MyDiary.NoActionBar" />
         <activity
             android:name=".AddNote"
             android:exported="false" />
