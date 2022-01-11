@@ -4,7 +4,8 @@
 
     <PreferenceCategory
         app:title="@string/login_method"
-        tools:ignore="TextContrastCheck">
+        tools:ignore="TextContrastCheck"
+        android:iconSpaceReserved="false">
 
         <EditTextPreference
             app:key="@string/signature_title"
@@ -19,14 +20,6 @@
             android:iconSpaceReserved="false"
             android:summaryOff="@string/no_auth"
             android:summaryOn="@string/auth"/>
-        <CheckBoxPreference
-            android:dependency="password_s"
-            android:defaultValue="false"
-            android:key="finger_print"
-            android:title="Use Fingerprint To Sign in"
-            android:iconSpaceReserved="false"
-            android:summaryOff="@string/no_print"
-            android:summaryOn="@string/print"/>
         <SwitchPreference
             android:defaultValue="false"
             android:key="always"
@@ -35,12 +28,22 @@
             android:summaryOn="@string/no_auth1"
             android:summaryOff="@string/auth1"
             />
+        <CheckBoxPreference
+            android:dependency="always"
+            android:defaultValue="false"
+            android:key="finger_print"
+            android:title="Use Fingerprint To Sign in"
+            android:iconSpaceReserved="false"
+            android:summaryOff="@string/no_print"
+            android:summaryOn="@string/print"/>
+
 
     </PreferenceCategory>
 
     <PreferenceCategory
         app:title="@string/sync_header"
-        tools:ignore="TextContrastCheck">
+        tools:ignore="TextContrastCheck"
+        android:iconSpaceReserved="false">
 
         <SwitchPreferenceCompat
             app:key="sync"
