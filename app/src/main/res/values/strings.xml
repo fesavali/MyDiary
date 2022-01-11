@@ -57,4 +57,5 @@
     <string name="no_auth1">This will keep your Account unsecured always</string>
     <string name="auth1">Require an Authentication When You Open the app</string>
     <string name="settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>
