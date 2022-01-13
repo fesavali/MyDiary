@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import android.content.SharedPreferences
 import androidx.preference.Preference
+import com.savaliscodes.mydiary.SettingsFragment.Companion.prefName
 
 
 class Login : AppCompatActivity() {
@@ -38,10 +39,10 @@ class Login : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         //prefs reference
-        sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(prefName, Context.MODE_PRIVATE)
 
         //get pref value
-        userPrefName = sharedPreferences.getString("u_sign", def).toString()
+        userPrefName = sharedPreferences.getString("u_sign", "").toString()
         requirePass = sharedPreferences.getBoolean("password_s", true)
         keepSigned = sharedPreferences.getBoolean("always", false)
         fingerPrint = sharedPreferences.getBoolean("finger_print", false)
@@ -196,7 +197,5 @@ class Login : AppCompatActivity() {
         super.onBackPressed()
         finish()
     }
-    companion object{
-        val def : String = "My Diary"
-    }
+
 }
