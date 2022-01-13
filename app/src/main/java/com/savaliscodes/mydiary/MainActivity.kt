@@ -1,10 +1,11 @@
 package com.savaliscodes.mydiary
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -24,8 +25,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var logsAdapter : LogsAdapter
     private lateinit var db : FirebaseFirestore
     private lateinit var work : ListenerRegistration
-
-
+    private lateinit var sharedPreferences: SharedPreferences
+    var keepSigned :Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -57,16 +58,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-//this causes triple entry reading
-//    override fun onResume() {
-//        super.onResume()
-//        eventChangeListener()
-//
-//    }
-//    override fun onStart() {
-//        super.onStart()
-//        eventChangeListener()
-//    }
+            //this causes triple entry reading
+            //    override fun onResume() {
+            //        super.onResume()
+            //        eventChangeListener()
+            //
+            //    }
+            //    override fun onStart() {
+            //        super.onStart()
+            //        eventChangeListener()
+            //    }
 
     private fun eventChangeListener() {
         db = FirebaseFirestore.getInstance()
@@ -228,6 +229,10 @@ class MainActivity : AppCompatActivity() {
 
     //sign out user on pressing back button
     override fun onBackPressed() {
+        //check prefs
+        sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+        keepSigned = sharedPreferences.getBoolean("always", false)
+
         //signOut user
         FirebaseAuth.getInstance().signOut()
 
