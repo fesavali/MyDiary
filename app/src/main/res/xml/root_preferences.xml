@@ -10,6 +10,7 @@
         <EditTextPreference
             app:key="@string/signature_title"
             app:title="@string/user"
+            android:defaultValue="@string/app_name"
             app:useSimpleSummaryProvider="true"
             android:summary="@string/display"
             android:iconSpaceReserved="false"/>
