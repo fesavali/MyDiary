@@ -1,6 +1,8 @@
 package com.savaliscodes.mydiary
 
+import android.app.PendingIntent.getActivity
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +12,9 @@ import android.widget.*
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
+import android.content.SharedPreferences
+import androidx.preference.Preference
+
 
 class Login : AppCompatActivity() {
     lateinit var userName : EditText
@@ -21,9 +26,26 @@ class Login : AppCompatActivity() {
     lateinit var mail : EditText
     lateinit var rest : Button
 
+    //read preferences
+    private lateinit var sharedPreferences: SharedPreferences
+    var userPrefName : String = ""
+    var requirePass: Boolean = false
+    var keepSigned : Boolean = false
+    var fingerPrint: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        //prefs reference
+        sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+
+        //get pref value
+        userPrefName = sharedPreferences.getString("u_sign", def).toString()
+        requirePass = sharedPreferences.getBoolean("password_s", true)
+        keepSigned = sharedPreferences.getBoolean("always", false)
+        fingerPrint = sharedPreferences.getBoolean("finger_print", false)
+
 
         //check if user is signed in
         var mAuthUser = FirebaseAuth.getInstance().currentUser
@@ -173,5 +195,8 @@ class Login : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
+    }
+    companion object{
+        val def : String = "My Diary"
     }
 }
