@@ -7,7 +7,7 @@ import androidx.preference.PreferenceFragmentCompat
 class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.root_preferences, prefName)
+        setPreferencesFromResource(R.xml.root_preferences, rootKey)
     }
     companion object{
         const val prefName = "SHARED_PREF"
