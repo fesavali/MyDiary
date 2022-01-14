@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -25,14 +26,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var logsAdapter : LogsAdapter
     private lateinit var db : FirebaseFirestore
     private lateinit var work : ListenerRegistration
-    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sp: SharedPreferences
     var keepSigned :Boolean = false
+    var alwaysSign : Boolean = true
+    var prefUname : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //connect toolbar to main activity
-        setSupportActionBar(binding.toolbar)
+
+        //pref
+        sp = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        prefUname = sp.getString("u_sign", "").toString()
+        //check prefs
+        keepSigned = sp.getBoolean("always", false)
+        alwaysSign = sp.getBoolean("password_s", true)
+        //set Preferred App Title
+        if(prefUname.isNotEmpty()){
+            refreshToolbar()
+        }
 
         recyclerView = findViewById(R.id.rc_logs)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -58,16 +70,20 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-            //this causes triple entry reading
-            //    override fun onResume() {
-            //        super.onResume()
-            //        eventChangeListener()
-            //
-            //    }
-            //    override fun onStart() {
-            //        super.onStart()
-            //        eventChangeListener()
-            //    }
+
+    private fun refreshToolbar() {
+        binding.toolbar.title = prefUname;
+        setSupportActionBar(binding.toolbar)
+    }
+    //this causes triple entry reading
+//                override fun onResume() {
+//                    super.onResume()
+//                    refreshToolbar()
+//                }
+//                override fun onStart() {
+//                    super.onStart()
+//                    refreshToolbar()
+//                }
 
     private fun eventChangeListener() {
         db = FirebaseFirestore.getInstance()
@@ -229,21 +245,53 @@ class MainActivity : AppCompatActivity() {
 
     //sign out user on pressing back button
     override fun onBackPressed() {
-        //check prefs
-        sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-        keepSigned = sharedPreferences.getBoolean("always", false)
+        //pref logics
+        if(alwaysSign){
+            //signOut user
+            FirebaseAuth.getInstance().signOut()
 
-        //signOut user
-        FirebaseAuth.getInstance().signOut()
+            //stop listening for db changes
+            work.remove()
+            //start Login activity
+            val intent = Intent(this, Login::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+            finish()
+        }
+        if(keepSigned){
+            finishAffinity()
+            System.exit(0)
+        }
+        if(!alwaysSign && !keepSigned){
+            showSecDialog()
+        }
 
-        //stop listening for db changes
-        work.remove()
+    }
 
-        //start Login activity
-        val intent = Intent(this, Login::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
-        finish()
+    private fun showSecDialog() {
+        val secDialog = AlertDialog.Builder(this)
+        secDialog.setTitle("Update Your Security Preferences")
+        secDialog.setMessage("Please update your Preferences Before you close App")
+        secDialog.setIcon(android.R.drawable.ic_dialog_alert)
+        secDialog.setPositiveButton("Yes"){dialogInterface, which ->
+            val intent = Intent(applicationContext, Settings::class.java)
+            var out1 : String = "2"
+            intent.putExtra("close", out1)
+            startActivity(intent)
+        }
+        secDialog.setNeutralButton("Cancel"){dialogInterface , which ->
+            Toast.makeText(applicationContext,"clicked cancel\n operation canceled",Toast.LENGTH_SHORT).show()
+        }
+        secDialog.setNegativeButton("Updated"){dialogInterface, which ->
+            finishAffinity()
+            System.exit(0)
+            Toast.makeText(applicationContext,"clicked No",Toast.LENGTH_LONG).show()
+        }
+        val alertDialog : AlertDialog = secDialog.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+
+//            Toast.makeText(this,"Please update your Preferences Before you close App", Toast.LENGTH_SHORT)
     }
 
 }
