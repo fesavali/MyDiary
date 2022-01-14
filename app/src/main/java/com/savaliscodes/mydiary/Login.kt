@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import android.content.SharedPreferences
 import androidx.preference.Preference
+import androidx.preference.PreferenceManager
 import com.savaliscodes.mydiary.SettingsFragment.Companion.prefName
 
 
@@ -28,7 +29,7 @@ class Login : AppCompatActivity() {
     lateinit var rest : Button
 
     //read preferences
-    private lateinit var sharedPreferences: SharedPreferences
+    lateinit var sp : SharedPreferences
     var userPrefName : String = ""
     var requirePass: Boolean = false
     var keepSigned : Boolean = false
@@ -39,13 +40,13 @@ class Login : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         //prefs reference
-        sharedPreferences = getSharedPreferences(prefName, Context.MODE_PRIVATE)
+        sp= PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
         //get pref value
-        userPrefName = sharedPreferences.getString("u_sign", "").toString()
-        requirePass = sharedPreferences.getBoolean("password_s", true)
-        keepSigned = sharedPreferences.getBoolean("always", false)
-        fingerPrint = sharedPreferences.getBoolean("finger_print", false)
+        userPrefName = sp.getString("u_sign", "").toString()
+        requirePass = sp.getBoolean("password_s", true)
+        keepSigned = sp.getBoolean("always", false)
+        fingerPrint = sp.getBoolean("finger_print", false)
 
 
         //check if user is signed in
