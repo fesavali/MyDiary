@@ -90,11 +90,11 @@ class Login : AppCompatActivity() {
     }
 
     private fun checkIfPhoneHasFingerprint() {
-
+        Toast.makeText(this, "Biometrics checked", Toast.LENGTH_SHORT).show()
     }
 
     private fun showFingerprint() {
-
+        Toast.makeText(this, "Bioscreen checked", Toast.LENGTH_SHORT).show()
     }
 
     private fun logInUser() {
