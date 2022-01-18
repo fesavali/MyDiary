@@ -13,7 +13,6 @@ import com.google.firebase.auth.FirebaseAuth
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 
-
 class Login : AppCompatActivity() {
     lateinit var userName : EditText
     lateinit var pass : EditText
@@ -23,6 +22,8 @@ class Login : AppCompatActivity() {
     lateinit var forgot : TextView
     lateinit var mail : EditText
     lateinit var rest : Button
+    //biometrics
+
 
     //read preferences
     lateinit var sp : SharedPreferences
@@ -44,10 +45,16 @@ class Login : AppCompatActivity() {
         keepSigned = sp.getBoolean("always", false)
         fingerPrint = sp.getBoolean("finger_print", false)
 
-
         //check if user is signed in
         var mAuthUser = FirebaseAuth.getInstance().currentUser
-
+        if(requirePass){
+            FirebaseAuth.getInstance().signOut()
+            Toast.makeText(this, "You Are Logged Out", Toast.LENGTH_SHORT).show()
+        }
+        if(fingerPrint){
+            checkIfPhoneHasFingerprint()
+            showFingerprint()
+        }
         if(mAuthUser != null){
             val userId = mAuthUser.uid.toString()
             Toast.makeText(this,"You Are Logged in", Toast.LENGTH_SHORT).show()
@@ -79,6 +86,14 @@ class Login : AppCompatActivity() {
         forgot.setOnClickListener{
             sendEmailPassReset()
         }
+
+    }
+
+    private fun checkIfPhoneHasFingerprint() {
+
+    }
+
+    private fun showFingerprint() {
 
     }
 
@@ -194,5 +209,4 @@ class Login : AppCompatActivity() {
         super.onBackPressed()
         finish()
     }
-
 }
