@@ -1,8 +1,6 @@
 package com.savaliscodes.mydiary
 
-import android.app.PendingIntent.getActivity
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,9 +11,7 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import android.content.SharedPreferences
-import androidx.preference.Preference
 import androidx.preference.PreferenceManager
-import com.savaliscodes.mydiary.SettingsFragment.Companion.prefName
 
 
 class Login : AppCompatActivity() {
