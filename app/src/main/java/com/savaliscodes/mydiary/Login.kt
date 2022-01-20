@@ -34,14 +34,9 @@ class Login : AppCompatActivity() {
     lateinit var forgot : TextView
     lateinit var mail : EditText
     lateinit var rest : Button
-    //biometrics
-
 
     //read preferences
     lateinit var sp : SharedPreferences
-    var userPrefName : String = ""
-    var requirePass: Boolean = false
-    var keepSigned : Boolean = false
     var fingerPrint: Boolean = false
 
     //fingerprints
@@ -57,9 +52,6 @@ class Login : AppCompatActivity() {
         sp= PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
         //get pref value
-        userPrefName = sp.getString("u_sign", "").toString()
-        requirePass = sp.getBoolean("password_s", true)
-        keepSigned = sp.getBoolean("always", false)
         fingerPrint = sp.getBoolean("finger_print", false)
 
         //check if user is signed in
