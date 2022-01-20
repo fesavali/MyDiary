@@ -29,12 +29,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sp: SharedPreferences
     var keepSigned :Boolean = false
     var alwaysSign : Boolean = true
-    var prefUname : String = ""
+    var prefUname : String = "Set Name in Settings"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        refreshToolbar()
         //pref
         sp = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         prefUname = sp.getString("u_sign", "").toString()
@@ -245,6 +245,10 @@ class MainActivity : AppCompatActivity() {
 
     //sign out user on pressing back button
     override fun onBackPressed() {
+        if(keepSigned){
+            finishAffinity()
+            System.exit(0)
+        }
         //pref logics
         if(alwaysSign){
             //signOut user
@@ -258,10 +262,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        if(keepSigned){
-            finishAffinity()
-            System.exit(0)
-        }
+
         if(!alwaysSign && !keepSigned){
             showSecDialog()
         }
