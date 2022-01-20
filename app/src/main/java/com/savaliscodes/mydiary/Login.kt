@@ -17,10 +17,12 @@ import android.os.Build
 import android.provider.Settings.ACTION_BIOMETRIC_ENROLL
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.*
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat
 import androidx.preference.PreferenceManager
+import java.net.Authenticator
 import java.util.concurrent.Executor
 
 class Login : AppCompatActivity() {
@@ -66,6 +68,7 @@ class Login : AppCompatActivity() {
 //                showFingerprint()
             checkIfPhoneHasFingerprint()
         }
+
         if(mAuthUser != null){
             val userId = mAuthUser.uid.toString()
             Toast.makeText(this,"You Are Logged in", Toast.LENGTH_SHORT).show()
@@ -101,18 +104,18 @@ class Login : AppCompatActivity() {
     }
     private fun checkIfPhoneHasFingerprint() {
 //        Toast.makeText(this, "inafika hapa", Toast.LENGTH_SHORT).show()
-        val biometricManager = BiometricManager.from(this)
+        val biometricManager = from(this)
             when (biometricManager.canAuthenticate().and(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)) {
-                BiometricManager.BIOMETRIC_SUCCESS ->{
+                BIOMETRIC_SUCCESS ->{
                     Toast.makeText(this, "Biometrics checked", Toast.LENGTH_SHORT).show()
                     Log.d("MY_APP_TAG", "App can authenticate using biometrics.")
                     showFingerprint()
                 }
-                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->{
+                BIOMETRIC_ERROR_NO_HARDWARE ->{
                     Toast.makeText(this, "No fingerprint hardware found", Toast.LENGTH_SHORT).show()
                     Log.e("MY_APP_TAG", "No biometric features available on this device.")
                 }
-                BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->{
+                BIOMETRIC_ERROR_HW_UNAVAILABLE ->{
                     Toast.makeText(this,"Fingerprint is busy. Try again.", Toast.LENGTH_SHORT).show()
                     Log.e("MY_APP_TAG", "Biometric features are currently unavailable.")
                 }
