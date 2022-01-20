@@ -8,12 +8,12 @@
         android:iconSpaceReserved="false">
 
         <EditTextPreference
+            android:defaultValue="true"
+            android:iconSpaceReserved="false"
+            android:summary="@string/display"
             app:key="@string/signature_title"
             app:title="@string/user"
-            android:defaultValue="@string/app_name"
-            app:useSimpleSummaryProvider="true"
-            android:summary="@string/display"
-            android:iconSpaceReserved="false"/>
+            app:useSimpleSummaryProvider="true" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="password_s"
