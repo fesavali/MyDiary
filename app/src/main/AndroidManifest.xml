@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
         <activity
+            android:name=".DiaryView"
+            android:exported="false"
+            android:label="@string/title_activity_diary_view"
+            android:theme="@style/Theme.MyDiary.NoActionBar"/>
+        <activity
             android:name=".Settings"
             android:exported="false"
             android:label="@string/title_activity_settings"
@@ -35,7 +40,7 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme.MyDiary.NoActionBar"></activity>
+            android:theme="@style/Theme.MyDiary.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"
