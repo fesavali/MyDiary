@@ -58,4 +58,9 @@
     <string name="auth1">Require an Authentication When You Open the app</string>
     <string name="settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_diary_view">Diary View</string>
+    <string name="delete_log">Delete Log</string>
+    <string name="viewdoc">Doc title Here</string>
+    <string name="diary_title">Diary Title</string>
+    <string name="diary_log_contents">Diary Log Contents</string>
 </resources>
