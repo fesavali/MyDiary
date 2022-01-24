@@ -7,7 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 //class adapter must contain a dataclass arraylist
-class LogsAdapter(private val logsList : ArrayList<DiaryData>) : RecyclerView.Adapter<LogsAdapter.LogsViewHolder>() {
+class LogsAdapter(
+    private val logsList : ArrayList<DiaryData>,
+    private val listener : onLogClickListener
+    ) : RecyclerView.Adapter<LogsAdapter.LogsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogsAdapter.LogsViewHolder {
         //inflate recyclerview with custom data view
@@ -33,11 +36,27 @@ class LogsAdapter(private val logsList : ArrayList<DiaryData>) : RecyclerView.Ad
     }
 
      //initialise a Viewholder class that extends recyclerview.viewholder
-    public class LogsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class LogsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+     View.OnClickListener{
          //get ref to all views in custom view
         val lTitle : TextView = itemView.findViewById(R.id.log_title)
         val lContents : TextView = itemView.findViewById(R.id.log_contents)
         val lTime : TextView = itemView.findViewById(R.id.log_time)
 //        val uImg : ImageView = itemView.findViewById(R.id.my_image)
+
+        //on click listener
+         init {
+             itemView.setOnClickListener(this)
+         }
+
+         override fun onClick(v: View?) {
+             val position : Int = adapterPosition
+             if(position != RecyclerView.NO_POSITION){
+             listener.onLogClick(position)
+             }
+         }
+     }
+    interface onLogClickListener {
+        fun onLogClick(position: Int)
     }
 }
