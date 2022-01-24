@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.savaliscodes.mydiary.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), LogsAdapter.onLogClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var recyclerView: RecyclerView
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         logsList = arrayListOf()
 
-        logsAdapter = LogsAdapter(logsList)
+        logsAdapter = LogsAdapter(logsList, this)
 
         recyclerView.adapter = logsAdapter
 
@@ -84,6 +84,11 @@ class MainActivity : AppCompatActivity() {
 //                    super.onStart()
 //                    refreshToolbar()
 //                }
+
+    override fun onLogClick(position: Int) {
+        Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
+        val clickedLog : DiaryData = logsList[position]
+    }
 
     private fun eventChangeListener() {
         db = FirebaseFirestore.getInstance()
