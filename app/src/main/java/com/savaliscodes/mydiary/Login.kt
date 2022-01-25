@@ -48,12 +48,6 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val test = findViewById<Button>(R.id.test)
-        test.setOnClickListener {
-            val intent = Intent(this, DiaryView::class.java)
-            startActivity(intent)
-        }
-
         //prefs reference
         sp= PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
