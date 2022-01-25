@@ -1,6 +1,5 @@
 package com.savaliscodes.mydiary
 
-import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -13,16 +12,11 @@ import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import android.content.SharedPreferences
 import android.hardware.biometrics.BiometricManager.Authenticators.*
-import android.os.Build
-import android.provider.Settings.ACTION_BIOMETRIC_ENROLL
-import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.*
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
-import androidx.core.hardware.fingerprint.FingerprintManagerCompat
 import androidx.preference.PreferenceManager
-import java.net.Authenticator
 import java.util.concurrent.Executor
 
 class Login : AppCompatActivity() {
@@ -96,7 +90,7 @@ class Login : AppCompatActivity() {
     }
     private fun checkIfPhoneHasFingerprint() {
 //        Toast.makeText(this, "inafika hapa", Toast.LENGTH_SHORT).show()
-        val biometricManager = from(this)
+        val biometricManager = BiometricManager.from(this)
             when (biometricManager.canAuthenticate().and(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)) {
                 BIOMETRIC_SUCCESS ->{
                     Toast.makeText(this, "Biometrics checked", Toast.LENGTH_SHORT).show()

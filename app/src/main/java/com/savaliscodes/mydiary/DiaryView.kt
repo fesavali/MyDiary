@@ -1,7 +1,6 @@
 package com.savaliscodes.mydiary
 
 import android.content.ContentValues.TAG
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -13,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
 import com.savaliscodes.mydiary.databinding.ActivityDiaryViewBinding
 
 class DiaryView : AppCompatActivity() {
