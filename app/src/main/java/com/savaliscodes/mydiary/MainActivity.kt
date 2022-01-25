@@ -86,8 +86,18 @@ class MainActivity : AppCompatActivity(), LogsAdapter.onLogClickListener {
 //                }
 
     override fun onLogClick(position: Int) {
-        Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
         val clickedLog : DiaryData = logsList[position]
+        val id = clickedLog.DiaryLogID
+        val title = clickedLog.LogTitle
+        val contents = clickedLog.LogContents
+        val  user = clickedLog.UserId
+        val intent = Intent(this, DiaryView::class.java)
+        intent.putExtra("id", id)
+        intent.putExtra("title", title)
+        intent.putExtra("contents", contents)
+        intent.putExtra("user", user)
+        startActivity(intent)
     }
 
     private fun eventChangeListener() {
