@@ -60,6 +60,8 @@
                 android:fontFamily="@font/abril_fatface"
                 android:text="@string/log_contents"
                 android:textColor="#474141"
+                android:maxEms="10"
+                android:maxLines="1"
                 android:textStyle="normal|italic"
                 app:layout_constraintEnd_toEndOf="@+id/log_title"
                 app:layout_constraintHorizontal_bias="0.483"
