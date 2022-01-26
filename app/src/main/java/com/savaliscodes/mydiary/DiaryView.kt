@@ -1,6 +1,7 @@
 package com.savaliscodes.mydiary
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -8,7 +9,6 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,8 +39,8 @@ class DiaryView : AppCompatActivity() {
         }
 
         //get views
-        nTitle = findViewById(R.id.log_ttle)
-        contents = findViewById(R.id.log_conts)
+        nTitle = findViewById(R.id.log_ttle_ed)
+        contents = findViewById(R.id.log_conts_ed)
 
         //values from intent
         userId = intent.getStringExtra("user").toString()
@@ -54,8 +54,8 @@ class DiaryView : AppCompatActivity() {
         contents.text = contents1
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+           val intent = Intent(this, EditNote::class.java)
+            startActivity(intent)
         }
     }
 

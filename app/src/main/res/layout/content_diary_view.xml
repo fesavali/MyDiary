@@ -30,7 +30,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/log_conts"
+                    android:id="@+id/log_conts_ed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/abril_fatface"
@@ -57,7 +57,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/log_ttle"
+            android:id="@+id/log_ttle_ed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/abril_fatface"
