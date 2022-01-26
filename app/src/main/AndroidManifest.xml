@@ -14,10 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
         <activity
+            android:name=".EditNote"
+            android:exported="false"
+            android:label="@string/title_activity_edit_note"
+            android:theme="@style/Theme.MyDiary.NoActionBar" />
+        <activity
             android:name=".DiaryView"
             android:exported="false"
             android:label="@string/title_activity_diary_view"
-            android:theme="@style/Theme.MyDiary.NoActionBar"/>
+            android:theme="@style/Theme.MyDiary.NoActionBar" />
         <activity
             android:name=".Settings"
             android:exported="false"
