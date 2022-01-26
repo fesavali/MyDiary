@@ -48,6 +48,7 @@ class DiaryView : AppCompatActivity() {
 
         val title = intent.getStringExtra("title")
         val contents1 = intent.getStringExtra("contents")
+        val position = intent.getStringExtra("position")
 
         //set text to fields
         nTitle.text = title
@@ -55,6 +56,11 @@ class DiaryView : AppCompatActivity() {
 
         binding.fab.setOnClickListener { view ->
            val intent = Intent(this, EditNote::class.java)
+            intent.putExtra("position", position)
+            intent.putExtra("id", docId)
+            intent.putExtra("title", title)
+            intent.putExtra("contents", contents1)
+            intent.putExtra("user", userId)
             startActivity(intent)
         }
     }

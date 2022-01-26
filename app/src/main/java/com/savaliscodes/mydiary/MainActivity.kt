@@ -93,6 +93,7 @@ class MainActivity : AppCompatActivity(), LogsAdapter.onLogClickListener {
         val contents = clickedLog.LogContents
         val  user = clickedLog.UserId
         val intent = Intent(this, DiaryView::class.java)
+        intent.putExtra("position", position)
         intent.putExtra("id", id)
         intent.putExtra("title", title)
         intent.putExtra("contents", contents)

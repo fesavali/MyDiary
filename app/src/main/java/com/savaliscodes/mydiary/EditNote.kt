@@ -1,9 +1,13 @@
 package com.savaliscodes.mydiary
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
@@ -13,12 +17,24 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.savaliscodes.mydiary.databinding.ActivityEditNoteBinding
 
 class EditNote : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityEditNoteBinding
+    //values
+    lateinit var docID : String
+    lateinit var userId : String
+    lateinit var lTitle : String
+    lateinit var lContents : String
+    lateinit var position : String
+    //views
+    lateinit var titleEd : EditText
+    lateinit var contentsED : EditText
+    //db
+    private lateinit var db : FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +47,23 @@ class EditNote : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
+        //get views
+        titleEd = findViewById(R.id.log_ttle_ed)
+        contentsED = findViewById(R.id.log_conts_ed)
+
+        //get values from intent
+        docID = intent.getStringExtra("id").toString()
+        userId = intent.getStringExtra("user").toString()
+        lTitle = intent.getStringExtra("title").toString()
+        lContents = intent.getStringExtra("contents").toString()
+        position = intent.getStringExtra("position").toString()
+
+        //all values set to EditText field have to be editable
+        fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+
+        //set text to views
+        titleEd.text = lTitle.toEditable()
+        contentsED.text = lContents.toEditable()
 
     }
 
@@ -64,7 +97,7 @@ class EditNote : AppCompatActivity() {
         updateDoa.setIcon(android.R.drawable.ic_input_add)
         //perform positive action
         updateDoa.setPositiveButton("Yes"){dialogInterface, which ->
-            Toast.makeText(this, "Log Updated", Toast.LENGTH_SHORT).show()
+            updateLog()
         }
         //cancel option
         updateDoa.setNeutralButton("Cancel"){dialogInterface, which ->
@@ -73,6 +106,7 @@ class EditNote : AppCompatActivity() {
         //perform negative action
         updateDoa.setNegativeButton("No"){dialogInterface, which ->
             Toast.makeText(applicationContext,"clicked No", Toast.LENGTH_LONG).show()
+            finish()
         }
         //create the alert dialog
         val alertDialog : AlertDialog = updateDoa.create()
@@ -81,12 +115,51 @@ class EditNote : AppCompatActivity() {
         alertDialog.show()
     }
 
+    private fun updateLog() {
+        db = FirebaseFirestore.getInstance()
+        //get new values
+        val newTitle = titleEd.text
+        val newContents = contentsED.text
+        //put values in hashmap
+        val updates = hashMapOf<String, Any>(
+            "LogTitle" to newTitle,
+            "LogContents" to newContents
+        )
+        if (newTitle.equals(lTitle) && newContents.equals(lContents)) {
+            Toast.makeText(applicationContext, "You Have not made any changes", Toast.LENGTH_SHORT)
+                .show()
+            finish()
+        } else {
+            //do the update
+            db.collection("Diary Logs").document(docID)
+                .update(updates)
+                .addOnCompleteListener { task->
+                    if(task.isSuccessful){
+                        Log.d(ContentValues.TAG, "DocumentSnapshot successfully updated!")
+                        Toast.makeText(
+                            applicationContext,
+                            "Diary Log Updated Successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        finish()
+                    }else{
+                        Log.d(ContentValues.TAG, "Error Updating document")
+                        Toast.makeText(
+                            applicationContext,
+                            "Diary Log Update Failed. Try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        }
+    }
+
     private fun cancelDialog() {
        val cancelDao = AlertDialog.Builder(this)
         //set title for alert dialog
         cancelDao.setTitle("Cancel")
         //set message for alert dialog
-        cancelDao.setMessage("Are you sure you want to cancel this update this Log?")
+        cancelDao.setMessage("Are you sure you want to cancel updating this Log?")
         cancelDao.setIcon(android.R.drawable.ic_dialog_alert)
         //perform positive action
         cancelDao.setPositiveButton("Yes"){dialogInterface, which ->
