@@ -30,7 +30,6 @@
     <string name="enter_your_account_email_to_reset_password">Enter Your Account Email to Reset Password</string>
     <string name="reset_password">Reset Password</string>
     <string name="log_out">Log Out</string>
-    <string name="cancel">Cancel</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -63,4 +62,7 @@
     <string name="viewdoc">Doc title Here</string>
     <string name="diary_title">Diary Title</string>
     <string name="diary_log_contents">Diary Log Contents</string>
+    <string name="title_activity_edit_note">Edit Note</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 </resources>
