@@ -17,7 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 import com.savaliscodes.mydiary.databinding.ActivityEditNoteBinding
 
 class EditNote : AppCompatActivity() {
@@ -35,6 +35,10 @@ class EditNote : AppCompatActivity() {
     lateinit var contentsED : EditText
     //db
     private lateinit var db : FirebaseFirestore
+    //get ref to list
+    private lateinit var logsList : ArrayList<DiaryData>
+    private lateinit var logsAdapter : LogsAdapter
+    private lateinit var work : ListenerRegistration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +68,6 @@ class EditNote : AppCompatActivity() {
         //set text to views
         titleEd.text = lTitle.toEditable()
         contentsED.text = lContents.toEditable()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -118,8 +121,8 @@ class EditNote : AppCompatActivity() {
     private fun updateLog() {
         db = FirebaseFirestore.getInstance()
         //get new values
-        val newTitle = titleEd.text
-        val newContents = contentsED.text
+        val newTitle = titleEd.text.toString()
+        val newContents = contentsED.text.toString()
         //put values in hashmap
         val updates = hashMapOf<String, Any>(
             "LogTitle" to newTitle,
@@ -141,7 +144,10 @@ class EditNote : AppCompatActivity() {
                             "Diary Log Updated Successfully",
                             Toast.LENGTH_SHORT
                         ).show()
-                        finish()
+                        eventChangeListener()
+                       finish()
+                        //stop listening for db changes
+                        work.remove()
                     }else{
                         Log.d(ContentValues.TAG, "Error Updating document")
                         Toast.makeText(
@@ -152,6 +158,50 @@ class EditNote : AppCompatActivity() {
                     }
                 }
         }
+    }
+
+    private fun eventChangeListener() {
+        db = FirebaseFirestore.getInstance()
+
+        // Create a reference to the cities collection
+        val logsRef = db.collection("Diary Logs")
+
+        // Create a query against the collection.
+        val query = logsRef.whereEqualTo("UserId", userId)
+
+        work = query.orderBy("LogTime", Query.Direction.DESCENDING)
+            //read both realtime and local data
+            .addSnapshotListener(
+                MetadataChanges.INCLUDE,
+                object : EventListener<QuerySnapshot> {
+                    override fun onEvent(
+                        value: QuerySnapshot?,
+                        error: FirebaseFirestoreException?
+                    ) {
+                        if(error != null){
+                            Log.e("Firestore Read Error", error.message.toString())
+                            Toast.makeText(applicationContext, "No Diary Logs Yet", Toast.LENGTH_SHORT).show()
+                            return
+                        }
+                        if(value?.isEmpty == true){
+                            Toast.makeText(applicationContext, "Welcome. Add Your First Log.\n Press the + button", Toast.LENGTH_LONG).show()
+                        }
+                        for(dc : DocumentChange in value?.documentChanges!!){
+                            if(dc.type == DocumentChange.Type.ADDED){
+                                logsList.add(dc.document.toObject(DiaryData::class.java))
+                            }
+                            if(dc.type == DocumentChange.Type.REMOVED){
+                                logsList.remove(dc.document.toObject(DiaryData::class.java))
+                            }
+                            if(dc.type == DocumentChange.Type.MODIFIED){
+                                logsList.add(dc.document.toObject(DiaryData::class.java))
+                            }
+                        }
+                        logsAdapter.notifyDataSetChanged()
+                    }
+
+                })
+
     }
 
     private fun cancelDialog() {
