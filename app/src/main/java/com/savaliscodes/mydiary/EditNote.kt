@@ -145,9 +145,9 @@ class EditNote : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                         eventChangeListener()
-                       finish()
                         //stop listening for db changes
                         work.remove()
+                       finish()
                     }else{
                         Log.d(ContentValues.TAG, "Error Updating document")
                         Toast.makeText(
