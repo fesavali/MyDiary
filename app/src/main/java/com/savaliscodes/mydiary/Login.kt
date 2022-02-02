@@ -51,7 +51,7 @@ class Login : AppCompatActivity() {
         //check if user is signed in
         var mAuthUser = FirebaseAuth.getInstance().currentUser
         if(fingerPrint){
-//                showFingerprint()
+            //showFingerprint()
             checkIfPhoneHasFingerprint()
         }
 
