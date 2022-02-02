@@ -67,7 +67,6 @@ class Login : AppCompatActivity() {
         pass = findViewById(R.id.password)
         progress = findViewById(R.id.bar)
         login = findViewById(R.id.btnLogin)
-        //val googleBtn = findViewById<Button>(R.id.googleLog)
         reg = findViewById(R.id.regTxt)
         forgot = findViewById(R.id.fogt)
 
