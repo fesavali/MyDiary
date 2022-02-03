@@ -280,6 +280,7 @@ class MainActivity : AppCompatActivity(), LogsAdapter.onLogClickListener {
         }
 
         if(!alwaysSign && !keepSigned){
+            //alert
             showSecDialog()
         }
 
