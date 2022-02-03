@@ -94,6 +94,7 @@ class Login : AppCompatActivity() {
                 BIOMETRIC_SUCCESS ->{
                     Toast.makeText(this, "Biometrics checked", Toast.LENGTH_SHORT).show()
                     Log.d("MY_APP_TAG", "App can authenticate using biometrics.")
+                    //show fingerprint dialog
                     showFingerprint()
                 }
                 BIOMETRIC_ERROR_NO_HARDWARE ->{
