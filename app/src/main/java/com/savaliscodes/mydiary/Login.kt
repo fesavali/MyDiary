@@ -116,7 +116,7 @@ class Login : AppCompatActivity() {
                                                    errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
                     Toast.makeText(applicationContext,
-                        "Authentication error: $errString", Toast.LENGTH_SHORT)
+                        "Authentication Failed: $errString", Toast.LENGTH_SHORT)
                         .show()
                 }
 
